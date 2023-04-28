@@ -1,4 +1,0 @@
-la structure de la base de données vous impose de remplir les tables dans un ordre défini.
-Quel est l’ordre à adopter ?
-
-Il faut d'abord créer la table fournis et produit car il sont une relation oneToMany avec plusieur table, ensuite entcom, ligcom et vente
