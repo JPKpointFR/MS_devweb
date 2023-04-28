@@ -1,0 +1,76 @@
+Remettez à votre formateur un dossier comportant les requêtes du cas suivant :
+
+
+
+
+La base Northwind
+Utilisez le script complet northwind_mysql.sql pour créer la base de données Northwind correspondant au schéma de BDD suivant :
+MPD Northwind
+
+
+
+Ecrivez ensuite les requêtes permettant d'obtenir les résultats attendus suivants :
+1- Liste des clients français :
+
+SELECT * FROM Northwind.customers WHERE Country = 'France';
+
+
+
+2- Liste des produits vendus par le fournisseur "Exotic Liquids" :
+
+SELECT * FROM Northwind.products WHERE SupplierID = 1;
+
+
+3- Nombre de produits mis à disposition par les fournisseurs français (tri par nombre de produits décroissant) :
+
+SELECT * FROM products
+WHERE SupplierID IN (18, 27, 28)
+ORDER BY UnitsInStock DESC;
+
+
+
+4- Liste des clients français ayant passé plus de 10 commandes :
+
+SELECT * FROM products 
+WHERE SupplierID IN (18, 27, 28) 
+AND UnitsOnOrder > 10 
+ORDER BY UnitsInStock DESC;
+
+
+
+5- Liste des clients dont le montant cumulé de toutes les commandes passées est supérieur à 30000 € :
+NB: chiffre d'affaires (CA) = total des ventes
+
+SELECT customerid, SUM(total) AS total_spent
+FROM orders
+GROUP BY customerid
+HAVING SUM(total) > 30000;
+
+
+6- Liste des pays dans lesquels des produits fournis par "Exotic Liquids" ont été livrés :
+
+SELECT * FROM `order details` WHERE ProductID IN (2,1,3);
+
+
+7- Chiffre d'affaires global sur les ventes de 1997 :
+NB: chiffre d'affaires (CA) = total des ventes
+
+SELECT SUM(UnitPrice * Quantity * (1 - Discount)) AS CA_total
+FROM `order details`
+JOIN orders ON `order details`.OrderID = orders.OrderID
+WHERE YEAR(orders.OrderDate) = 1997;
+
+
+8- Chiffre d'affaires détaillé par mois, sur les ventes de 1997 :
+
+SELECT DATE_FORMAT(OrderDate, '%Y-%m') AS Month, SUM(UnitPrice * Quantity * (1 - Discount)) AS Revenue
+FROM orders
+JOIN order_details ON orders.OrderID = order_details.OrderID
+WHERE YEAR(OrderDate) = 1997
+GROUP BY Month
+ORDER BY Month;
+
+
+
+
+
